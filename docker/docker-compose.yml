@@ -400,6 +400,9 @@ services:
     container_name: supabase-db
     image: supabase/postgres:15.8.1.085
     restart: unless-stopped
+    ports:
+      # 暴露 PostgreSQL 端口到宿主机,支持局域网连接
+      - ${POSTGRES_DIRECT_PORT:-5433}:${POSTGRES_PORT}
     volumes:
       - ./volumes/db/realtime.sql:/docker-entrypoint-initdb.d/migrations/99-realtime.sql:Z
       # Must be superuser to create event trigger
